@@ -1,0 +1,209 @@
+@charset "UTF-8";
+.w-25 {
+  width: 75%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+/* sass的单行注释不会被输出，多行注释会一并输出到编译后的css文件中*/
+.ColorExample1 {
+  color: green;
+}
+
+.ColorExample2 {
+  color: red;
+}
+
+.ColorExample3 {
+  color: green;
+}
+
+.ColorExample4 {
+  color: green;
+}
+
+.fatherExample1 {
+  width: 75%;
+}
+
+.fatherExample1 .sonExample1 {
+  width: 25%;
+}
+
+.fatherExample1 .sonExample1 .grandsonExample {
+  color: red;
+}
+
+.fatherExample1 .sonExample2 {
+  width: 75%;
+}
+
+.fatherExample1 .sonExample2 .grandsonExample {
+  color: green;
+}
+
+.fatherExample2 {
+  height: 75%;
+}
+
+.fatherExample2::after {
+  content: '';
+  display: block;
+}
+
+.fatherExample2:hover {
+  box-shadow: 0 0 3px;
+}
+
+.fatherExample2 div.div1 {
+  color: red;
+}
+
+.fatherExample2 div.div2 {
+  color: green;
+}
+
+.PinkPurpleBG {
+  background-color: #bda1cc;
+}
+
+.titleExample1 {
+  color: #bda1cc;
+  font-size: 6rem;
+  font-weight: bolder;
+  text-shadow: 0 0 6px;
+  font-style: italic;
+}
+
+.boxShadowExample1 {
+  box-shadow: 0 0 5px black;
+}
+
+.boxShadowExample2 {
+  box-shadow: 0 0 1px #8fffba;
+}
+
+.button-basic, .button-danger, .button-success {
+  border: none;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button-danger {
+  background-color: red;
+}
+
+.button-success {
+  background-color: green;
+  color: white;
+}
+
+.String {
+  str1: "abc";
+  str2: aaabcd;
+  str1index1: 1;
+  str2index1: 1;
+  str2index2: 3;
+  str2index4: 5;
+  bg: background-;
+  bg-c: background-color;
+  bg-s: background-size;
+}
+
+.List {
+  list1: 1, 2, 3;
+  list2: 1, 2, 3, 4;
+  list3: 1, 2, 3, 4, 5 6;
+  list4: 1, 2, 3, 4, 5 6, 7;
+  listindex1: 1;
+  listindex2: 1;
+  listindex4: 5;
+  listindex5: 6;
+  listitem1: 1;
+  listitem2: 5 6;
+  listitem3: 7;
+}
+
+.RadioSize-sm {
+  border-radius: "5px";
+}
+
+.RadioSize-md {
+  border-radius: "15px";
+}
+
+.FontSize-bg {
+  font-size: "30px";
+}
+
+.Exampleitem-5 {
+  width: 10em;
+}
+
+.Exampleitem-6 {
+  width: 12em;
+}
+
+.Exampleitem-7 {
+  width: 14em;
+}
+
+.Exampleitem-8 {
+  width: 16em;
+}
+
+.exampleItem_5 {
+  width: 10em;
+}
+
+.exampleItem_6 {
+  width: 12em;
+}
+
+.exampleItem_7 {
+  width: 14em;
+}
+
+.ExampleSize-4 {
+  width: 100%;
+}
+
+.ExampleSize-3 {
+  width: 75%;
+}
+
+.ExampleSize-2 {
+  width: 50%;
+}
+
+.ExampleSize-1 {
+  width: 25%;
+}
+
+.Exampleitem-1 {
+  font-size: 1rem;
+}
+
+.Exampleitem-2 {
+  font-size: 2rem;
+}
+
+.Exampleitem-3 {
+  font-size: 3rem;
+}
+
+.Exampleimg-img1 {
+  background: url(https://1.png) center/cover;
+}
+
+.Exampleimg-img2 {
+  background: url(https://2.png) center/cover;
+}
+
+.Exampleimg-img3 {
+  background: url(https://3.png) center/cover;
+}

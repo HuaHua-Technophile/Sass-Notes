@@ -1,0 +1,259 @@
+// sass支持变量，用$符号开头
+$w-25: 25%;
+$w-75: 75%;
+.w-25 {
+  width: $w-75;
+}
+.w-75 {
+  width: $w-75;
+}
+/* sass的单行注释不会被输出，多行注释会一并输出到编译后的css文件中*/
+
+// sass具有7种变量，且有作用域的概念
+//字符串，有引号字符串与无引号字符串，"foo", 'bar', baz
+//数字，1, 2, 13, 10px
+//颜色值，blue, #04a3f9, rgba(255,0,0,0.5)
+//布尔值，true, false
+//list列表，用空格或逗号作分隔符,下标从1开始
+//maps映射，(key1: value1, key2: value2)
+//空值，null
+
+// Sass 变量的作用域只能在当前的层级上有效果，如下所示 h1 的样式为它内部定义的 green，p 标签则是为 red。
+$myColor1: red;
+.ColorExample1 {
+  $myColor1: green; // 只在 ColorExample1 里头有用，局部作用域
+  color: $myColor1;
+}
+.ColorExample2 {
+  color: $myColor1;
+}
+// !global关键词可以把变量修改为全局
+$myColor2: red;
+.ColorExample3 {
+  $myColor2: green !global; // 全局作用域
+  color: $myColor2;
+}
+.ColorExample4 {
+  color: $myColor2; //此处也为绿色
+}
+
+//Sass的一大特色便是嵌套使用。类似于 HTML 的嵌套规则
+.fatherExample1 {
+  width: $w-75;
+  .sonExample1 {
+    width: $w-25;
+    .grandsonExample {
+      color: $myColor1;
+    }
+  }
+  .sonExample2 {
+    width: $w-75;
+    .grandsonExample {
+      color: $myColor2;
+    }
+  }
+}
+//Sass中，可用‘&’符号指代自身
+.fatherExample2 {
+  $h-75: 75% !global;
+  height: $h-75;
+  &::after {
+    content: '';
+    display: block;
+  }
+  &:hover {
+    box-shadow: 0 0 3px;
+  }
+  div {
+    &.div1 {
+      color: $myColor1;
+    }
+    &.div2 {
+      color: $myColor2;
+    }
+  }
+}
+//Sass Partials
+// 如果你不希望将一个 Sass 的代码文件编译到一个 CSS 文件，你可以在文件名的开头添加一个下划线。这将告诉 Sass 不要将其编译到 CSS 文件
+//例如：_colors.css
+
+//Sass @import可以帮助我们减少 CSS 重复的代码，节省开发时间。
+//我们可以安装不同的属性来创建一些代码文件，如：变量定义的文件、颜色相关的文件、字体相关的文件等。
+//CSS @import 指令在每次调用时，都会创建一个额外的 HTTP 请求。但，Sass @import 指令将文件包含在 CSS 中，不需要额外的 HTTP 请求
+@import '_colors';
+.PinkPurpleBG {
+  background-color: $PinkPurple;
+}
+
+//Sass的@mixin 指令允许我们定义一个可以在整个样式表中重复使用的样式，称之为‘混入’。@include 指令可以将混入（mixin）引入到样式中。
+@mixin Pink-Big-title {
+  //定义可重复使用的‘混入’
+  color: $PinkPurple;
+  font-size: 6rem;
+  font-weight: bolder;
+}
+//'混入'中也可以引入其他'混入'
+@mixin Pink-Big-title-Shadow {
+  @include Pink-Big-title;
+  text-shadow: 0 0 6px;
+}
+.titleExample1 {
+  @include Pink-Big-title-Shadow;
+  font-style: italic; //斜体
+}
+//‘混入’可以接受参数，参数也可定义默认值
+@mixin SummerGreen-BoxShadow($radius: 1px, $color: $SummerGreen) {
+  box-shadow: 0 0 $radius $color;
+}
+.boxShadowExample1 {
+  @include SummerGreen-BoxShadow(5px, black); //在使用‘混入’时，添加参数
+}
+.boxShadowExample2 {
+  @include SummerGreen-BoxShadow(); //若不写明参数，可使用默认值
+}
+
+//Sass支持继承的概念，@extend关键字让Sass将一个选择器的样式从另一选择器继承。
+//如果一个样式与另外一个样式几乎相同，只有少量的区别，则使用 @extend 就显得很有用。
+//以下 Sass 实例中，我们创建了一个基本的按钮样式 .button-basic，接着我们定义了两个按钮样式 .button-report 与 .button-submit，它们都继承了 .button-basic ，它们主要区别在于背景颜色与字体颜色，其他的样式都是一样的。
+.button-basic {
+  border: none;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+.button-danger {
+  @extend .button-basic;
+  background-color: red;
+}
+.button-success {
+  @extend .button-basic;
+  background-color: green;
+  color: white;
+}
+
+//字符串API：-------------------------------
+$str1: quote(abc); //给字符串添加引号=>"abc"
+$str2: unquote('aaabcd'); //移除字符串的引号=>aabcd
+//str-index(string, substring):返回 substring 子字符串第一次在 string 中出现的位置。如果没有匹配到子字符串，则返回 null
+$str1index1: str-index($str1, a); //=>1
+$str1index2: str-index($str1, '"'); //=>null
+$str2index1: str-index($str2, a); //=> 1
+$str2index2: str-index($str2, ab); //=> 3
+$str2index3: str-index($str2, x); //=> null
+$str2index4: str-index($str2, c); //=> 5
+//str-insert(string, insert, index)在字符串 string 中 index 位置插入 insert。
+$bg: background-;
+$bg-c: str-insert($bg, color, 12); //background-color
+$bg-s: str-insert($bg, size, 12); //background-size
+.String {
+  #{str1}: $str1;
+  #{str2}: $str2;
+  #{str1index1}: $str1index1;
+  #{str1index2}: $str1index2;
+  #{str2index1}: $str2index1;
+  #{str2index2}: $str2index2;
+  #{str2index3}: $str2index3;
+  #{str2index4}: $str2index4;
+  #{bg}: $bg;
+  #{bg-c}: $bg-c;
+  #{bg-s}: $bg-s;
+}
+
+//list列表API------------------------------
+//Sass的列表是不可变的，因此在处理列表时，返回的是一个新的列表，而不是在原有的列表上进行修改。
+$list1: (1, 2, 3);
+//append(list, value, [separator])将单个值 value 添加到列表尾部。separator 是分隔符，默认会自动侦测，或者指定为逗号或空格
+$list2: append($list1, 4);
+$list3: append($list2, (5 6));
+$list4: append($list3, 7);
+//index(list, value)	返回元素 value 在列表中的索引位置。
+$listindex1: index(a b c, a); //1
+$listindex2: index($list4, 1); //1
+$listindex3: index($list4, 5); //null
+$listindex4: index($list4, 5 6); //5
+$listindex5: index($list4, 7); //6
+// nth(list, n)	获取第 n 项的值。
+$listitem1: nth($list4, 1); //1
+$listitem2: nth($list4, 5); //5 6
+$listitem3: nth($list4, 6); //7
+.List {
+  #{list1}: $list1;
+  #{list2}: $list2;
+  #{list3}: $list3;
+  #{list4}: $list4;
+  #{listindex1}: $listindex1;
+  #{listindex2}: $listindex2;
+  #{listindex3}: $listindex3;
+  #{listindex4}: $listindex4;
+  #{listindex5}: $listindex5;
+  #{listitem1}: $listitem1;
+  #{listitem2}: $listitem2;
+  #{listitem3}: $listitem3;
+}
+
+//Sass支持判断语法。使用@if 和 @else
+@function Size($selectname) {
+  @if str-index($selectname, Size) {
+    @if str-index($selectname, -sm) {
+      @return '5px';
+    } @else if str-index($selectname, -md) {
+      @return '15px';
+    } @else if str-index($selectname, -bg) {
+      @return '30px';
+    }
+  }
+}
+.RadioSize-sm {
+  border-radius: Size(RadioSize-sm);
+}
+.RadioSize-md {
+  border-radius: Size(RadioSize-md);
+}
+.FontSize-bg {
+  font-size: Size(RadioSize-bg);
+}
+
+//Sass支持for循环，使用@for指令可以在限制的范围内重复输出格式，每次按要求（变量的值）对输出结果做出变动。
+//这个指令包含两种格式：@for $var from <start> through <end>，或者 @for $var from <start> to <end>
+//区别在于 through 与 to 的含义：当使用 through 时，条件范围包含 <start> 与 <end> 的值，e而使用 to 时条件范围只包含 <start> 的值不包含 <end> 的值。另外，$var 可以是任何变量，比如 $i；<start> 和 <end> 必须是整数值
+@for $i from 5 through 8 {
+  //5~8
+  .Exampleitem-#{$i} {
+    width: 2em * $i;
+  }
+}
+@for $i from 5 to 8 {
+  //5~7
+  .exampleItem_#{$i} {
+    width: 2em * $i;
+  }
+}
+//Sass支持while循环,@while 指令重复输出格式直到表达式返回结果为 false。这样可以实现比 @for 更复杂的循环，只是很少会用到
+$Size_length: 4;
+@while $Size_length>0 {
+  .ExampleSize-#{$Size_length} {
+    width: unquote(
+      '#{$Size_length * 25}%'
+    ); //不能单独输出百分号，只能先引号包裹，再去除引号
+  }
+  $Size_length: $Size_length - 1;
+}
+
+//Sass支持遍历。@each指令的格式是 $var in <list>, $var 可以是任何变量名，比如 $length 或者 $name，而 <list> 是一连串的值，也列表或映射
+//@each 将变量 $var 作用于值列表中的每一个项目，然后输出结果，例如：
+@each $item in $list1 {
+  .Exampleitem-#{$item} {
+    font-size: #{$item}rem;
+  }
+}
+$map1: (
+  img1: 'https://1.png',
+  img2: 'https://2.png',
+  img3: 'https://3.png',
+);
+@each $index, $item in $map1 {
+  .Exampleimg-#{$index} {
+    background: url(#{$item}) center/cover;
+  }
+}

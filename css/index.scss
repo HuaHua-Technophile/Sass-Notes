@@ -1,0 +1,50 @@
+$map: (
+  top:0px,
+  left:0px,
+  bottom:0px,
+  right:0px
+);
+$width: 400px;
+
+@mixin center($wid, $hei, $border) {
+
+  position: absolute;
+
+  @each $key,
+  $value in $map {
+    #{$key}: $value;
+  }
+
+  width: $wid;
+  height: $hei;
+  border: 1px solid $border;
+  margin: auto;
+
+
+}
+
+
+.box {
+  width: $width;
+  height: $width;
+  border: 1px solid red;
+  position: relative;
+
+
+  .father {
+
+    @extend .box;
+    border: 1px solid black;
+
+    .son {
+      @include center(100px, 100px, red)
+    }
+  }
+
+  ul {
+    width: ($width/2);
+    height: ($width/2);
+    border: 1px solid black;
+  }
+
+}

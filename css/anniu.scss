@@ -1,0 +1,32 @@
+$list: (
+  default:#FFFFFF,
+  primary:#007BFF,
+  success:#28A745,
+  info:#17A2B8,
+  warning:#FFC107,
+  danger:#DC3545
+);
+
+
+.btn {
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+}
+
+@each $key,
+$value in $list {
+  .btn-#{$key} {
+    background-color: $value;
+
+    @if ($key=="default") {
+      color: #333;
+    }
+
+
+    &:hover {
+
+      background-color: $value - #100a10
+    }
+  }
+}
